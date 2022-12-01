@@ -353,6 +353,16 @@
             }
         };
 
+        var onRequestRefreshFile = function(event) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "config?fileName=" + encodeURIComponent(config.document.title));
+            xhr.send();
+            xhr.onload = function () {
+                innerAlert(xhr.responseText);
+                docEditor.refreshFile(JSON.parse(xhr.responseText));
+            };
+        };
+
         var onDocumentReady = function(){
             fixSize();
         };
@@ -372,6 +382,7 @@
             "onRequestSelectDocument": onRequestSelectDocument,
             "onRequestSelectSpreadsheet": onRequestSelectSpreadsheet,
             "onRequestOpen": onRequestOpen,
+            "onRequestRefreshFile": onRequestRefreshFile,
         };
 
         if (<%- JSON.stringify(editor.userid) %> != null) {

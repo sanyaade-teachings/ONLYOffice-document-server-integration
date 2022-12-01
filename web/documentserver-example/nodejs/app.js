@@ -1010,6 +1010,39 @@ app.post('/track', async (req, res) => { // define a handler for tracking file c
   }
 });
 
+app.get('/config', async (req, res) => {
+  try {
+    req.DocManager = new DocManager(req, res);
+    const fileName = fileUtility.getFileName(req.query.fileName);
+
+    // file config data
+    const data = {
+      document: {
+        directUrl: req.DocManager.getDownloadUrl(fileName),
+        key: req.DocManager.getKey(fileName),
+        title: fileName,
+        url: req.DocManager.getDownloadUrl(fileName, true),
+      },
+      editorConfig: {
+        callbackUrl: req.DocManager.getCallback(fileName),
+      },
+    };
+
+    if (cfgSignatureEnable) {
+      // sign token with given data using signature secret
+      data.token = jwt.sign(data, cfgSignatureSecret, { expiresIn: cfgSignatureSecretExpiresIn });
+    }
+
+    res.setHeader('Content-Type', 'application/json');
+    res.write(JSON.stringify(data));
+  } catch (ex) {
+    console.log(ex);
+    res.status(500);
+    res.write('error');
+  }
+  res.end();
+});
+
 app.get('/editor', (req, res) => { // define a handler for editing document
   try {
     req.DocManager = new DocManager(req, res);

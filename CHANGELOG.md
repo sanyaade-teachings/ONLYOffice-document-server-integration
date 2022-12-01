@@ -1,5 +1,6 @@
 # Change Log
 
+- nodejs: refresh config
 - nodejs: tabs menu
 - nodejs: converting function on index page
 - java-spring: using java docs-integration-sdk
