@@ -88,10 +88,8 @@
 
         var onRequestHistory = function (event) {  // the user is trying to show the document version history
             const fileName = "<%- file.name %>" || null;
-            const directUrl = "<%- file.directUrl %>" || null;
             const data = {
               fileName: fileName,
-              directUrl: directUrl
             };
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "historyObj");
@@ -119,7 +117,6 @@
         var onRequestRestore = function (event) { // the user is trying to restore file version
           const version = event.data.version;
           const fileName = "<%- file.name %>" || null;
-          const directUrl = "<%- file.directUrl %>" || null;
           const restoreData = {
             version: version,
             fileName: fileName,
@@ -133,7 +130,6 @@
             if (response.success && !response.error) {
               const dataForHistory = {
                 fileName: fileName,
-                directUrl: directUrl
               };
               let xhr = new XMLHttpRequest();
               xhr.open("POST", "historyObj");
@@ -268,8 +264,6 @@
         var requestReference = function(data, callback) {
             innerAlert(data);
 
-            data.directUrl = !!config.document.directUrl;
-
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "reference");
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -304,7 +298,6 @@
               }
               if (firstXlsxName) {
                 let data = {
-                  directUrl : "<%- file.directUrl %>" || false,
                   path : firstXlsxName
                 };
                 let xhr = new XMLHttpRequest();
@@ -422,7 +415,7 @@
             if (config.type !== "mobile") {
                 return;
             }
-            var wrapEl = document.getElementsByClassName("form");
+            var wrapEl = document.getElementsByTagName("iframe");
             if (wrapEl.length) {
                 wrapEl[0].style.height = screen.availHeight + "px";
                 window.scrollTo(0, -1);
