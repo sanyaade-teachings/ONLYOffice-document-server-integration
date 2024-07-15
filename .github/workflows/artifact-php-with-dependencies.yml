@@ -3,11 +3,12 @@ name: Artifact PHP with dependencies
 on:
   workflow_dispatch:
   push:
-    branches: [master]
-    paths: ['web/documentserver-example/php/**']
-  pull_request:
-    branches: [master]
-    paths: ['web/documentserver-example/php/**']
+  # push:
+  #   branches: [master]
+  #   paths: ['web/documentserver-example/php/**']
+  # pull_request:
+  #   branches: [master]
+  #   paths: ['web/documentserver-example/php/**']
 
 jobs:
   artifact:
